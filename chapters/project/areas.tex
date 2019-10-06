@@ -1,0 +1,93 @@
+\section{Aree geografiche}\label{sec:areas}
+
+La prima questione che si pone per la realizzazione del progetto, riguarda come
+definire le aree geografiche che l'utente può selezionare come area da
+analizzare. Trovare una soluzione a questo problema si rende necessario in
+quanto, talvolta, nel database di \MonIQA{}, per alcune stazioni di
+monitoraggio, sono presenti periodi di tempo in cui non sono disponibili
+misurazioni.  Pertanto, si può limitare il problema aggregando insieme più
+stazioni di monitoraggio. I dati aggregati così raccolti avranno minor
+possibilità di contenere periodi privi di dati (risulta infatti improbabile che
+mettendo insieme le informazioni provenienti da più stazioni ci siano intervalli
+di tempo dove nessuna stazione ha raccolto dati). Le cause di questi vuoti di
+dati possono essere varie: alcune stazioni di monitoraggio possono andare
+\textit{offline} per alcuni periodi, oppure gli script che si occupano di
+prelevare le misurazioni e inserirle nel database di \MonIQA{} possono smettere
+di funzionare, e altro ancora.
+
+Altro motivo per cui è importante definire aree geografiche è che l'obiettivo
+del progetto è \emph{consentire l'analisi storica della qualità dell'aria di una
+zona più o meno vasta}, e non solo di un singolo punto \idest{stazione di
+monitoraggio}.
+
+Pertanto, le aree geografiche da definire dovranno rispettare i seguenti
+requisiti.
+\begin{itemize}
+	\item Devono essere \emph{sufficientemente vaste} da evitare troppi
+		periodi privi di misurazioni nei dati aggregati.
+	\item \emph{Non devono essere troppo vaste} per evitare di aggregare
+		dati da stazioni di monitoraggio troppo distanti che,
+		altrimenti, fornirebbero misurazioni di zone differenti del
+		territorio nazionale, perdendo la validità di tali informazioni.
+	\item Devono complessivamente \emph{coprire l'intero territorio
+		nazionale}.
+	\item Devono avere un \emph{nome chiaro che identifichi la zona} che si
+		vuole analizzare. L'utente, infatti, dovrà poter selezionare
+		l'area di suo interesse a partire dal nome.
+\end{itemize}
+
+Per rispondere a tali requisiti si è deciso di utilizzare \emph{le province e le
+città metropolitane} (che chiameremo indifferentemente ``province'' nel
+seguito).  Infatti, questi enti territoriali, non sono né eccessivamente vasti
+né troppo piccoli e hanno tutti il nome di una città capoluogo che identifica
+chiaramente l'area geografica. Inoltre, dato che il servizio ha anche
+l'obiettivo di essere utile alle amministrazioni territoriali per valutare piani
+e investimenti da attuare per ridurre l'inquinamento, una suddivisione basata
+sui territori di competenza delle amministrazioni provinciali risulta
+ragionevole.
+
+Nel database di \MonIQA{} per ogni stazione di monitoraggio è presente un campo
+\idest{colonna} ``città'' che relaziona la stazione con la città in cui si trova
+(una descrizione dettagliata del database è fornita nel paragrafo successivo).
+Nel database, gran parte dei record contengono il valore \code{NULL} in questo
+campo, in quanto non tutte le stazioni si possono chiaramente assegnare a una
+città (alcune stazioni si trovano in zone periferiche). Pertanto, al fine di
+rimuovere questi valori \code{NULL} così da avere ogni stazione con una città
+associata, si è deciso di utilizzare questo stesso campo della tabella delle
+stazioni per associarle alle province: quindi ogni stazione non avrà più una
+città di appartenenza, ma una provincia.
+
+Nel database sono presenti quasi \(1000\) stazioni di monitoraggio, sarebbe
+quindi scomodo assegnarle manualmente una per una alla relativa provincia.
+Pertanto si è deciso di utilizzare uno script scritto in linguaggio Python
+(\code{fill-cities.py}) che:
+\begin{enumerate}
+	\item preleva dal database la latitudine e la longitudine di ogni
+		stazione di monitoraggio;
+	\item utilizza un servizio esterno\footnote{Si è deciso di utilizzare il
+		servizio \textsc{MapIt} fornito dall'Associazione Openpolis
+		all'indirizzo \url{http://mapit.openpolis.it}.  Tale piattaforma
+		fornisce una REST API che permette di ottenere, in formato JSON,
+		informazioni sulle aree amministrative che circondano un punto
+		geografico fornito tramite parametri di una richiesta HTTP
+		GET\@. \textsc{MapIt} utilizza i dati sui confini delle unità
+		amministrative rilasciati pubblicamente ogni anno dall'ISTAT.}
+		per determinare la provincia in cui si trova la stazione di
+		monitoraggio;
+	\item produce uno script SQL che contiene le istruzioni \code{INSERT}
+		che aggiungono le province nell'apposita tabella del database e
+		le istruzioni \code{UPDATE} che aggiornano il campo ``città''
+		delle stazioni in modo da associarlo alla provincia a cui
+		appartengono.
+\end{enumerate}
+
+Si è deciso di generare uno script SQL piuttosto che modificare direttamente il
+database, così da consentire all'utilizzatore dello script Python di revisionare
+il risultato prima di eseguirlo sul server.
+
+Lo script Python stampa le istruzioni SQL su stream \textit{standard output},
+mentre sullo stream \textit{standard error} fornisce informazioni su quanto lo
+script sta facendo (la stazione che sta processando e la provincia individuata)
+e su eventuali errori.  In tal modo, è possibile utilizzare le funzioni di
+redirezione dell'output fornite dal sistema operativo per produrre lo script SQL
+su file senza rinunciare a controllare l'andamento dell'esecuzione.

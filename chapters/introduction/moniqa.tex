@@ -1,0 +1,61 @@
+\section{MonIQA}
+
+Per affrontare i problemi presentati nel capitolo precedente, è importante che
+le amministrazioni si dotino di strumenti di analisi della qualità dell'aria al
+fine di valutare quali sono le aree, i periodi e gli inquinanti di maggior
+interesse e di verificare la buona riuscita delle scelte e degli investimenti
+adottati.
+
+A tal scopo nasce \MonIQA\@. Questo servizio, sviluppato dall'Università di Pisa
+con il lavoro del Prof.\ Giuseppe Anastasi e degli Ing.\ Francesca Righetti e
+Carlo Vallati, è accessibile all'indirizzo \url{https://moniqa.dii.unipi.it} e
+offre la possibilità di visualizzare i dati sulla qualità dell'aria provenienti
+da stazioni di rilevamento dislocate sul territorio nazionale\footnote{I dati
+sono pubblicati sui loro siti web dalle Agenzie Regionali per la Protezione
+dell'Ambiente (ARPA) e quindi raccolti da \MonIQA\@.}.
+
+Per facilitare il monitoraggio della qualità dell'aria, \MonIQA{} utilizza un
+indice che permette di rappresentare in modo sintetico la qualità dell'aria
+valutando contemporaneamente i dati disponibili su vari inquinanti atmosferici.
+Tale indice, chiamato \standout{Indice di Qualità dell'Aria} (IQA), viene
+calcolato dividendo la \emph{misura} relativa all'inquinante maggiormente
+presente (relativamente ai suoi limiti di legge) nell'area di interesse per il
+suo \emph{limite di riferimento} stabilito dal \mbox{D.\,Lgs.}~155/2010. Ad
+esempio: un IQA del \(50\%\) indica che il peggior inquinante ha concentrazioni
+pari alla metà del suo limite legale; un IQA del \(150\%\) indica che il peggior
+inquinante ha concentrazioni pari a una volta e mezzo del limite.
+
+\MonIQA{} quindi associa delle classi di giudizio e relativi cromatismi in base
+al valore dell'IQA:
+\begin{itemize}
+	\item [\textbf{Buona} \colorbullet{goodiqa}] indica che l'inquinante
+		peggiore ha concentrazioni \emph{inferiori alla metà del limite}
+		di legge (\(IQA \leq 50\%\));
+	\item [\textbf{Discreta} \colorbullet{reasonableiqa}] l'inquinante
+		peggiore ha concentrazioni \emph{inferiori al limite} consentito
+		(\(50\% < IQA \leq 100\%\));
+	\item [\textbf{Mediocre} \colorbullet{mediocreiqa}] l'inquinante
+		peggiore ha concentrazioni \emph{fino a una volta e mezzo il
+		valore limite} (\(100\% < IQA \leq 150\%\));
+	\item [\textbf{Scadente} \colorbullet{pooriqa}] l'inquinante peggiore ha
+		concentrazioni \emph{fino a due volte il limite} legale (\(150\%
+		< IQA \leq 200\%\));
+	\item [\textbf{Pessima} \colorbullet{badiqa}] l'inquinante peggiore ha
+		concentrazioni \emph{superiori al doppio del limite} consentito.
+\end{itemize}
+Queste 5 classi di giudizio permettono di comprendere facilmente e
+immediatamente lo stato della qualità dell'aria di un'area o città del
+territorio nazionale.
+
+Le amministrazioni territoriali possono quindi utilizzare questo servizio per
+guidare le proprie scelte e investimenti nella lotta all'inquinamento
+atmosferico e, a posteriori, per verificare i risultati ottenuti. I cittadini,
+grazie alla semplicità dell'IQA, possono visualizzare facilmente lo stato di
+qualità dell'aria della zona in cui si trovano.
+
+Informare i cittadini e fornire alle amministrazione gli strumenti di analisi
+adeguati è \emph{il primo passo fondamentale per affrontare il problema
+dell'inquinamento dell'aria}: senza un approccio basato su dati reali e senza il
+supporto della popolazione sarebbe difficile individuare e attuare efficaci
+piani di sviluppo e di investimento volti alla riduzione delle sostanze nocive
+nell'atmosfera.

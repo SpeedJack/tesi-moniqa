@@ -1,0 +1,74 @@
+\chapter{Il progetto}
+
+Il sito web di \MonIQA{} contiene diverse pagine, ognuna delle quali svolge una
+funzione precisa: è presente una pagina che illustra l'algoritmo di calcolo
+dell'indice IQA; una dove si possono reperire informazioni sui principali
+inquinanti atmosferici; una mappa di tutte le stazioni di monitoraggio dislocate
+sul territorio nazionale con calcolo degli indici e grafico dell'andamento
+giornaliero per ogni stazione; un'altra per visualizzare informazioni aggregate
+per regione; una pagina di ricerca che permette di visualizzare i dati di una
+singola stazione per un singolo giorno; e infine una heat-map della
+concentrazione delle stazioni di monitoraggio su tutto il suolo nazionale.
+
+L'obiettivo di questo lavoro è stato quello di estendere \MonIQA{} aggiungendo
+una nuova pagina, chiamata \controlname{Dati Storici}, che mostri, per area
+geografica, informazioni aggregate sull'andamento (\textit{trend}) dell'IQA e
+degli inquinanti nell'aria per ogni stagione in un determinato periodo
+temporale.
+
+Da un punto di vista dell'utente la pagina deve funzionare come segue:
+\begin{enumerate}
+	\item l'utente seleziona l'area geografica di interesse da una lista di
+		tutte le aree geografiche disponibili;
+	\item l'utente seleziona il range di anni in cui vuole esaminare
+		l'andamento della qualità dell'aria;
+	\item il sito mostra, in forma tabulare e con un grafico a linee, i
+		valori dell'IQA e degli inquinanti per ogni stagione di ogni
+		anno.
+\end{enumerate}
+
+La nuova pagina deve avere l'obiettivo di permettere di analizzare il trend
+dell'indice di qualità dell'aria e degli inquinanti negli anni passati allo
+scopo di fornire alle amministrazioni territoriali uno strumento utile ad
+individuare i principali aspetti di interesse per combattere l'inquinamento e a
+verificare, tramite l'analisi dei trend, se le scelte e gli investimenti
+adottati hanno ottenuto i risultati previsti o meno.
+
+Inoltre questo nuovo strumento deve permettere ai cittadini di potersi informare
+sull'andamento della qualità dell'aria nella loro zona in modo che possano
+efficacemente valutare l'operato delle amministrazioni locali nella lotta
+all'inquinamento ambientale.
+
+A tal fine, la pagina deve soddisfare alcuni requisiti fondamentali, di seguito
+elencati.
+\begin{itemize}
+	\item Deve essere \emph{semplice e intuitivo}: lo strumento deve poter
+		essere utilizzato anche da utenti non esperti.
+	\item Deve avere un'\emph{interfaccia grafica pulita e ordinata}: è
+		indispensabile che l'utente possa ricavare le informazioni di
+		cui necessita dai dati mostrati nella pagina in modo immediato.
+	\item Deve avere un \emph{grafico a linee} con l'andamento degli
+		inquinanti nel tempo: fondamentale per poter facilmente
+		visualizzare i trend.
+	\item Deve mostrare le informazioni in modo da poter \emph{comparare i
+		valori di inquinamento dell'aria di ogni anno con gli anni
+		precedenti e successivi} negli stessi periodi di tempo.
+	\item Deve permettere di \emph{filtrare i risultati} anche per singole
+		stazioni (utile per analizzare lo stato dell'aria in zone di
+		particolare interesse, come vicino a una zona industriale, a
+		un'autostrada o a una scuola) e per singolo inquinante (per
+		poter studiare l'andamento dell'inquinante nel tempo più in
+		dettaglio).
+	\item Deve disporre di una \emph{funzionalità che consenta all'utente di
+		valutare l'attendibilità} dei dati mostrati.
+\end{itemize}
+
+Nei capitoli seguenti sono illustrate le soluzioni adottate per soddisfare i
+requisiti sopra elencati oltre che per risolvere altri problemi sorti durante lo
+sviluppo del software.
+
+\input{project/areas}
+\input{project/database}
+\input{project/query-performance}
+\input{project/ux-data-view}
+\input{project/filtering}

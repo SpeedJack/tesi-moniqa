@@ -1,0 +1,36 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage{thesis}
+
+\includeonly{%
+	titlepage,
+	chapters/introduction,
+	chapters/project,
+	chapters/conclusions,
+	chapters/acknowledgments
+}
+
+\begin{document}
+\title{Analisi del trend della qualità dell'aria nazionale}
+\author{Niccolò Scatena}
+\supervisor{Chiar.mo Prof. & Giuseppe Anastasi \\ Chiar.ma Ing. & Francesca Righetti}
+\department{Ingegneria dell'Informazione}
+\coursename{Laurea Triennale in Ingegneria Informatica}
+\worktype{Tesi di Laurea Triennale}
+\academicyear{2018/2019}
+
+\include{titlepage}
+
+\tableofcontents
+\thispagestyle{empty}
+
+\setcounter{page}{0}
+
+\include{chapters/introduction}
+\include{chapters/project}
+\include{chapters/conclusions}
+
+\titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
+\include{chapters/acknowledgments}
+
+\end{document}

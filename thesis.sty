@@ -1,0 +1,111 @@
+\ProvidesPackage{thesis}
+
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[autostyle=true]{csquotes}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,top=3.3cm,bottom=3.3cm,left=5cm,right=4.2cm]{geometry}
+\usepackage{minibox}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage[italian]{varioref}
+\usepackage[hyphens]{url}
+\usepackage[hyperref=true,
+	url=false,
+	isbn=false,
+	backref=true,
+	citestyle=verbose-ibid,
+	giveninits=true,
+	bibstyle=authortitle,
+	sorting=nty]{biblatex}
+\usepackage[hidelinks]{hyperref}
+
+\makeatletter
+
+\def\input@path{{./chapters/}}
+
+\def\department#1{\gdef\@department{#1}}
+\def\@department{\@latex@warning@no@line{No \noexpand\department given}}
+
+\def\coursename#1{\gdef\@coursename{#1}}
+\def\@coursename{\@latex@warning@no@line{No \noexpand\coursename given}}
+
+\def\worktype#1{\gdef\@worktype{#1}}
+\def\@worktype{\@latex@warning@no@line{No \noexpand\worktype given}}
+
+\def\supervisor#1{\gdef\@supervisor{#1}}
+\def\@supervisor{\@latex@warning@no@line{No \noexpand\supervisor given}}
+
+\def\academicyear#1{\gdef\@academicyear{#1}}
+\def\@academicyear{\@latex@warning@no@line{No \noexpand\academicyear given}}
+
+\def\printtitle{\expandafter\MakeUppercase\expandafter{\@title}}
+\def\printauthor{\@author}
+\def\printdepartment{Dipartimento\space{}di\space\@department}
+\def\printcoursename{Corso\space{}di\space\@coursename}
+\def\printworktype{\@worktype}
+\def\printsupervisor{\@supervisor}
+\def\printacademicyear{Anno\space{}Accademico\space\@academicyear}
+
+\makeatother
+
+\addbibresource{bibliography.bib}
+\graphicspath{{./img/}}
+\lstset{inputpath=./codelistings/}
+
+\definecolor{goodiqa}{RGB}{29, 173, 234}
+\definecolor{reasonableiqa}{RGB}{70, 166, 74}
+\definecolor{mediocreiqa}{RGB}{216, 124, 46}
+\definecolor{pooriqa}{RGB}{214, 30, 41}
+\definecolor{badiqa}{RGB}{121, 41, 120}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codeorange}{rgb}{0.95,0.45,0.1}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\definecolor{graytext}{gray}{0.75}
+
+\renewcommand*{\newunitpunct}{\addcomma\space}
+\renewcommand{\lstlistingname}{Listato}
+
+\newcommand\chem{\mathtt}
+\newcommand\code{\texttt}
+\newcommand\standout{\textbf}
+\newcommand\controlname{\textsc}
+\newcommand\MonIQA{\textsc{MonIQA}}
+\newcommand\badvalue[1]{\textcolor{red}{\textbf{#1}}}
+\newcommand\idest[1]{(i.e.\ #1)}
+
+\newcommand{\colorbullet}[1]{\Large\textcolor{#1}{\textbullet}\normalsize}
+
+\lstdefinestyle{sqlcode}{%
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{codeorange},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+
+\lstset{style=sqlcode}
+
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hspace{20pt}\textcolor{graytext}{|}\hspace{20pt}}{0pt}{\Huge\bfseries}

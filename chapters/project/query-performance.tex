@@ -1,0 +1,45 @@
+\section{Performance della query}
+
+La query presentata nel paragrafo precedente ha però il difetto di avere
+performance scarse. Ad esempio, eseguendo la query per la provincia di XXX
+vediamo che impiega Y minuti per fornire il risultato. Tempo ovviamente non
+accettabile per un'applicazione web.
+
+Per ridurre il tempo richiesto per l'esecuzione della query si è quindi deciso
+di aggiungere una nuova tabella al database che contiene già i dati aggregati
+necessari e si aggiorna, attraverso \textit{trigger} MySQL, ogni volta che viene
+aggiunta, modificata, eliminata una misurazione.
+
+La nuova tabella, chiamata \code{historical\_data}, è definita come mostrato nel
+Listato \vref{lst:historicaldatatable}.
+
+\lstinputlisting[language=SQL, label={lst:historicaldatatable}, caption={Schema
+della tabella \code{historical\_data} e dell'istruzione \code{INSERT} utilizzata
+per riempire la tabella con tutte le misurazioni già presenti nel
+database.}]{historical-data-table.sql}
+
+I campi \code{year}, \code{quarter} e \code{fk\_sensortype} contengono,
+rispettivamente, l'anno, il quarto di anno e la chiave esterna al tipo di
+sensore. Il campo \code{fk\_city} contiene la chiave esterna alla provincia. I
+campi \code{measure\_sum} e \code{measure\_count} contengono invece la somma di
+tutte le misurazioni (per quella provincia, quarto di anno e tipo di sensore) e
+il numero totale di misurazioni disponibili.  La media può essere calcolata come
+\(measure\_sum / measure\_count\). In questo modo abbiamo realizzato una tabella
+che fa da ``cache'' per i dati aggregati che vogliamo ottenere e possiamo
+utilizzare la query mostrata nel Listato \vref{lst:fastquery} per prelevare i
+dati.
+
+\lstinputlisting[language=SQL, label={lst:fastquery}, caption={Query ottimizzata
+per il prelievo dei dati dal database.}]{fast-query.sql}
+
+Le performance sono molto migliorate. Infatti la nuova query, sempre per la
+provincia XXX, ritorna il risultato in soli Z secondi.
+
+Tre trigger MySQL si occupano di mantenere aggiornata tale tabella ad ogni
+operazione di \code{INSERT}, \code{UPDATE}, \code{DELETE} sulla tabella
+\code{measurements}. L'aggiornamento non richiede alcuna operazione
+\textit{resource-intensive} in quanto, ad esempio, per l'inserimento di una nuova
+misurazione, è sufficiente individuare il record da aggiornare (in base al
+periodo, alla provincia e al tipo di sensore della nuova misurazione), quindi
+sommare a \code{measure\_sum} il valore della nuova misurazione e incrementare
+di uno il contatore \code{measure\_count}.
