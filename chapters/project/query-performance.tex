@@ -1,9 +1,9 @@
 \section{Performance della query}
 
 La query presentata nel paragrafo precedente ha però il difetto di avere
-performance scarse. Ad esempio, eseguendo la query per la provincia di XXX
-vediamo che impiega Y minuti per fornire il risultato. Tempo ovviamente non
-accettabile per un'applicazione web.
+performance scarse. Ad esempio, eseguendo la query per la provincia di Roma
+vediamo che impiega 8 minuti e 5 secondi per fornire il risultato. Tempo
+ovviamente non accettabile per un'applicazione web.
 
 Per ridurre il tempo richiesto per l'esecuzione della query si è quindi deciso
 di aggiungere una nuova tabella al database che contiene già i dati aggregati
@@ -11,7 +11,7 @@ necessari e si aggiorna, attraverso \textit{trigger} MySQL, ogni volta che viene
 aggiunta, modificata, eliminata una misurazione.
 
 La nuova tabella, chiamata \code{historical\_data}, è definita come mostrato nel
-Listato \vref{lst:historicaldatatable}.
+Listato \ref{lst:historicaldatatable}.
 
 \lstinputlisting[language=SQL, label={lst:historicaldatatable}, caption={Schema
 della tabella \code{historical\_data} e dell'istruzione \code{INSERT} utilizzata
@@ -26,14 +26,14 @@ tutte le misurazioni (per quella provincia, quarto di anno e tipo di sensore) e
 il numero totale di misurazioni disponibili.  La media può essere calcolata come
 \(measure\_sum / measure\_count\). In questo modo abbiamo realizzato una tabella
 che fa da ``cache'' per i dati aggregati che vogliamo ottenere e possiamo
-utilizzare la query mostrata nel Listato \vref{lst:fastquery} per prelevare i
+utilizzare la query mostrata nel Listato \ref{lst:fastquery} per prelevare i
 dati.
 
 \lstinputlisting[language=SQL, label={lst:fastquery}, caption={Query ottimizzata
 per il prelievo dei dati dal database.}]{fast-query.sql}
 
 Le performance sono molto migliorate. Infatti la nuova query, sempre per la
-provincia XXX, ritorna il risultato in soli Z secondi.
+provincia di Roma, ritorna il risultato in meno di un centesimo di secondo.
 
 Tre trigger MySQL si occupano di mantenere aggiornata tale tabella ad ogni
 operazione di \code{INSERT}, \code{UPDATE}, \code{DELETE} sulla tabella

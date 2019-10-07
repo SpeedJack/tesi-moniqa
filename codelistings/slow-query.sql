@@ -9,5 +9,5 @@ INNER JOIN measurements m ON m.fk_sensor = s.pk_sensor
 WHERE c.name = '{{CITY_NAME}}'
   AND m.date BETWEEN (UNIX_TIMESTAMP(CONCAT('{{START_YEAR}}', '-01-01')) * 1000)
   AND ((UNIX_TIMESTAMP(CONCAT('{{END_YEAR}}', '-01-01')) * 1000) - 1)
-GROUP BY year, quarter, s.fk_sensortpe
+GROUP BY year, quarter, s.fk_sensortype
 ORDER BY year ASC, quarter ASC;

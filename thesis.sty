@@ -1,4 +1,5 @@
-\ProvidesPackage{thesis}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{thesis}[2019/10/08 Package for UNIPI thesis]
 
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
@@ -14,7 +15,7 @@
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{amsmath}
 \usepackage{listings}
-\usepackage[italian]{varioref}
+%\usepackage[italian]{varioref}
 \usepackage[hyphens]{url}
 \usepackage[hyperref=true,
 	url=false,
@@ -25,8 +26,6 @@
 	bibstyle=authortitle,
 	sorting=nty]{biblatex}
 \usepackage[hidelinks]{hyperref}
-
-\makeatletter
 
 \def\input@path{{./chapters/}}
 
@@ -52,8 +51,6 @@
 \def\printworktype{\@worktype}
 \def\printsupervisor{\@supervisor}
 \def\printacademicyear{Anno\space{}Accademico\space\@academicyear}
-
-\makeatother
 
 \addbibresource{bibliography.bib}
 \graphicspath{{./img/}}
